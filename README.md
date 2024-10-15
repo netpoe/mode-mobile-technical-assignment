@@ -29,7 +29,7 @@ The following actions and use cases are expected to be implemented and will be e
 Expected Use Cases
 
 ├── User Authentication via Web3
-│   ├── User logs in via connecting their MetaMask wallet
+│   ├── ✅ User logs in via connecting their MetaMask wallet
 │   └── User is required to sign a message with their wallet to properly sign in
 │
 ├── To-Do List Functionality
