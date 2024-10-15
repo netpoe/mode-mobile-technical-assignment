@@ -75,4 +75,40 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  h1 {
+    @apply text-5xl;
+    @apply mb-4;
+  }
+  h2 {
+    @apply text-4xl;
+    @apply mb-4;
+  }
+  h3 {
+    @apply text-3xl;
+    @apply mb-4;
+  }
+  h4 {
+    @apply text-2xl;
+    @apply mb-4;
+  }
+  h5 {
+    @apply text-xl;
+    @apply mb-4;
+  }
+  p {
+    @apply mb-4;
+  }
+  li {
+    @apply mb-4;
+    @apply pl-4;
+  }
+  li:last-child {
+    @apply mb-6;
+  }
+  a {
+    text-decoration: underline;
+  }
+  .text-xxs {
+    font-size: 0.6rem;
+  }
 }
