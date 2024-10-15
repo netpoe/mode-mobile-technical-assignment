@@ -1,0 +1,18 @@
+{
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": "never",
+		"source.fixAll.stylelint": "always",
+		"source.fixAll.eslint": "always"
+	},
+	"typescript.tsdk": "./web/node_modules/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"eslint.validate": [
+			"typescript",
+			"typescriptreact"
+	 ],
+	"rust-analyzer.linkedProjects": [
+		"./contracts/prompt-wars/Cargo.toml",
+		"./contracts/market-factory/Cargo.toml",
+		"./contracts/shared/Cargo.toml"
+	]
+}

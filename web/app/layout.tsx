@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Navbar } from "@/components/navbar/Navbar";
+import { EvmWalletSelectorContextController } from "@/context/evm/wallet-selector/EvmWalletSelectorContextController";
+import { TodosContextController } from "@/src/context/todos/TodosContextController";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,11 +27,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="en" className="dark">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <EvmWalletSelectorContextController>
+          <TodosContextController>
+            <Navbar />
+
+            {children}
+          </TodosContextController>
+        </EvmWalletSelectorContextController>
       </body>
     </html>
   );

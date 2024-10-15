@@ -1,0 +1,12 @@
+.next
+node_modules
+*.yml
+.serverless_nextjs
+out-storybook
+out
+.happo-dist
+src/api/codegen
+src/components/ui
+plop-templates
+tsconfig.json
+src/components/svg/PromptWarsLogo.tsx

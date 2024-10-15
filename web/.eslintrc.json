@@ -1,3 +1,18 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": "next/core-web-vitals",
+  "plugins": ["unused-imports", "prettier"],
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-img-element": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ],
+    "prettier/prettier": [
+      "warn",
+      { "usePrettierrc": true, "printWidth": 120, "tabWidth": 2, "trailingComma": "all", "proseWrap": "always" }
+    ],
+    "react-hooks/exhaustive-deps": "off"
+  }
 }
