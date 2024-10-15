@@ -1,0 +1,36 @@
+{
+	"info": {
+		"_postman_id": "2074807c-1131-4cdd-bb16-463d4953ab16",
+		"name": "ToDos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37414214"
+	},
+	"item": [
+		{
+			"name": "create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Sample ToDo\",\n    \"description\": \"This is a sample ToDo description\",\n    \"dueDate\": \"2024-08-31T00:00:00.000Z\",\n    \"priority\": \"medium\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}{{path}}/todos",
+					"host": [
+						"{{host}}{{path}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
