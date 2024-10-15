@@ -1,0 +1,9 @@
+{
+  "name": "api-collection",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "postman-to-openapi": "^3.0.1"
+  }
+}
