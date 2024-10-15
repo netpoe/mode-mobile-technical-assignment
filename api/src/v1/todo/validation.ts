@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const ToDoValidation = {
+export const ToDoValidation = {
   getToDos: z.object({
     query: z.object({
       page: z.coerce.number().int().positive().default(1),

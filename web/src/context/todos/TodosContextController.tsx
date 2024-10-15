@@ -4,12 +4,18 @@ import React, { useState } from "react";
 
 import { TodosContext } from "./TodosContext";
 import { TodosContextControllerProps, TodosContextType } from "./TodosContext.types";
-import { CreateToDoValidationType, GetToDosValidationType } from "dummy-todo-api/v1/todo/validation";
+import { CreateToDoValidationType, GetToDosValidationType, ToDoValidation } from "dummy-todo-api/v1/todo/validation";
 import { ToDosService } from "@/lib/api-client";
 import { ToDo } from "dummy-todo-api/v1/todo/controller";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export const TodosContextController = ({ children }: TodosContextControllerProps) => {
   const [todos, setTodos] = useState<ToDo[]>([]);
+
+  const createToDoForm = useForm<CreateToDoValidationType>({
+    resolver: zodResolver(ToDoValidation.createToDo),
+  });
 
   async function getTodos(body: GetToDosValidationType["query"]) {
     try {
@@ -29,9 +35,17 @@ export const TodosContextController = ({ children }: TodosContextControllerProps
 
   async function createTodo(body: CreateToDoValidationType["body"]) {
     try {
-      const result = await ToDosService.createTodo(body);
+      const result = await ToDosService.createTodo({
+        title: "placeholder",
+        dueDate: new Date(),
+        priority: "medium",
+        ...body,
+      });
 
-      getTodos({ page: 0, limit: 10 });
+      await getTodos({ page: 0, limit: 10 });
+
+      createToDoForm.clearErrors();
+      createToDoForm.resetField("body.description", { defaultValue: "" });
 
       console.log(result);
     } catch (error) {
@@ -43,6 +57,7 @@ export const TodosContextController = ({ children }: TodosContextControllerProps
     createTodo,
     getTodos,
     todos,
+    createToDoForm,
   };
 
   return <TodosContext.Provider value={props}>{children}</TodosContext.Provider>;
