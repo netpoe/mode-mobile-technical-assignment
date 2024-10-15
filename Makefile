@@ -6,11 +6,13 @@ endif
 
 # Set up development environment
 up-dev:
-	docker compose up -d postgres
-	docker compose up -d redis
-	docker compose up -d todo-api
-	./wait-for-it.sh -t 0 localhost:5928 -- echo "Postgres is up"
-	./wait-for-it.sh -t 0 localhost:6379 -- echo "Redis is up"
+	sh ./api/install.sh
+	sh ./web/install.sh
+	# docker compose up -d postgres
+	# docker compose up -d redis
+	# docker compose up -d todo-api
+	# ./wait-for-it.sh -t 0 localhost:5928 -- echo "Postgres is up"
+	# ./wait-for-it.sh -t 0 localhost:6379 -- echo "Redis is up"
 
 # Tear down Docker containers and prune
 down:

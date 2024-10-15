@@ -7,14 +7,14 @@ import {
   UpdateToDoValidationType,
 } from './validation';
 
-interface ToDo {
+export type ToDo = {
   id: string;
   title: string;
   description: string;
   dueDate: Date;
   priority: 'low' | 'medium' | 'high';
   completed: boolean;
-}
+};
 
 class ToDoControllerHandler {
   private todos: Map<string, ToDo> = new Map();

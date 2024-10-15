@@ -4,7 +4,6 @@
   "description": "Express Typescript dummy API for client side development",
   "main": "dist/index.js",
   "license": "UNLICENSED",
-  "private": true,
   "engines": {
     "node": ">=20.0.0 <21.0.0"
   },

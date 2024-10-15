@@ -5,7 +5,9 @@
 import type { CancelablePromise } from "../core/CancelablePromise";
 import { OpenAPI } from "../core/OpenAPI";
 import { request as __request } from "../core/request";
-import { CreateToDoRequest, CreateToDoResponse } from "../models/ToDos";
+import { CreateToDoValidationType } from "dummy-todo-api/v1/todo/validation";
+import { ToDo } from "dummy-todo-api/v1/todo/controller";
+
 export class ToDosService {
   /**
    * create
@@ -13,7 +15,7 @@ export class ToDosService {
    * @returns any Successful response
    * @throws ApiError
    */
-  public static postTodos(requestBody?: CreateToDoRequest): CancelablePromise<CreateToDoResponse> {
+  public static postTodos(requestBody?: CreateToDoValidationType["body"]): CancelablePromise<ToDo> {
     return __request(OpenAPI, {
       method: "POST",
       url: "/todos",
