@@ -59,9 +59,13 @@ export default function Home() {
         <div className="w-full sm:w-6/12">
           <div className="flex flex-col justify-end py-4 sm:mb-4 sm:flex-row sm:py-0 [&>div:not(:last-child)]:mb-2 [&>div:not(:last-child)]:sm:mb-0 [&>div:not(:last-child)]:sm:mr-2">
             <CustomLabel>
-              <CustomLabel.Head>ERC20 Balance</CustomLabel.Head>
+              <CustomLabel.Head>
+                <h4 className="mb-0">ERC20 Balance</h4>
+              </CustomLabel.Head>
               <CustomLabel.Description>
-                {ERC20Contract?.symbol} {ERC20Contract?.balanceOf}
+                <p className="mb-0">
+                  {ERC20Contract?.symbol} {ERC20Contract?.balanceOf}
+                </p>
               </CustomLabel.Description>
             </CustomLabel>
           </div>

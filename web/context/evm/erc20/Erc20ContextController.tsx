@@ -13,7 +13,7 @@ export const Erc20ContextController = ({ children, abi, address: contractAddress
 
   const { address } = useAccount();
 
-  function loadContract() {
+  async function loadContract() {
     try {
       const _contract = new ERC20Instance(
         contractAddress || ERC20Instance.defaultContractAddress,
@@ -21,19 +21,26 @@ export const Erc20ContextController = ({ children, abi, address: contractAddress
         publicClient,
       );
 
-      setContract(_contract);
+      const instance = await fetchContractValues(_contract);
+
+      setContract(instance);
     } catch (error) {
       console.error(error);
     }
   }
 
-  async function fetchContractValues() {
-    if (!contract) return;
+  async function fetchContractValues(_contract: ERC20Instance) {
+    if (!_contract) return;
 
     try {
-      const instances = await Promise.all([contract.getName(), contract.getSymbol(), contract.getBalanceOf(address!)]);
+      const instances = await Promise.all([
+        _contract.getName(),
+        _contract.getSymbol(),
+        _contract.getBalanceOf(address!),
+      ]);
+      const instance = instances[instances.length - 1];
 
-      setContract(instances[instances.length - 1]);
+      return instance;
     } catch (error) {
       console.error(error);
     }
@@ -41,15 +48,12 @@ export const Erc20ContextController = ({ children, abi, address: contractAddress
 
   useEffect(() => {
     loadContract();
-  }, []);
-
-  useEffect(() => {
-    fetchContractValues();
-  }, [contract, address]);
+  }, [address]);
 
   const props: Erc20ContextType = {
     contract,
     loadContract,
+    fetchContractValues,
   };
 
   return <Erc20Context.Provider value={props}>{children}</Erc20Context.Provider>;

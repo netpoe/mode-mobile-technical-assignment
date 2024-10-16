@@ -11,4 +11,5 @@ export type Erc20ContextControllerProps = {
 export type Erc20ContextType = {
   contract?: ERC20Instance;
   loadContract: () => void;
+  fetchContractValues: (_contract: ERC20Instance) => void;
 };

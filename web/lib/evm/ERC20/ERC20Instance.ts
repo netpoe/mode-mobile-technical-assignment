@@ -43,6 +43,8 @@ export class ERC20Instance {
   }
 
   async getBalanceOf(address: ZeroXAddress): Promise<ERC20Instance> {
+    if (!address) return this;
+
     try {
       const _balanceOf: BigInt = await this.contract.read.balanceOf([address]);
 
