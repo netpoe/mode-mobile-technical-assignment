@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import { apiOrigin, origin } from "@/hooks/useRoutes/useRoutes";
+import { apiOrigin } from "@/hooks/useRoutes/useRoutes";
 import type { ApiRequestOptions } from "./ApiRequestOptions";
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useTodosContext } from "@/src/context/todos/useTodosContext";
+import { useTodosContext } from "@/context/todos/useTodosContext";
 import { Table, TableBody, TableCell, TableRow, TableHeader } from "@/components/ui/table";
 import { CreateToDoValidationType } from "dummy-todo-api/v1/todo/validation";
 import clsx from "clsx";
@@ -8,9 +8,15 @@ import { KeyboardEvent, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { useEvmSignatureVerificationContext } from "@/context/evm/evm-signature-verification/useEvmSignatureVerificationContext";
+import { useAccount } from "wagmi";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const { createTodo, getTodos, todos, createToDoForm } = useTodosContext();
+  const { handleOnSignMessage, handleOnDisplayWidgetClick, ownershipVerification } =
+    useEvmSignatureVerificationContext();
+  const { isConnected } = useAccount();
 
   function onSubmitCreateToDo(data: CreateToDoValidationType) {
     createTodo(data.body);
@@ -22,18 +28,45 @@ export default function Home() {
     }
   }
 
+  function getActionComponent() {
+    if (!isConnected) {
+      return <Button onClick={handleOnDisplayWidgetClick}>Connect Your Wallet To Create ToDos</Button>;
+    }
+
+    if (isConnected && !ownershipVerification.isSignatureVerified) {
+      return <Button onClick={handleOnSignMessage}>Authenticate</Button>;
+    }
+
+    return (
+      <Form {...createToDoForm}>
+        <form onSubmit={createToDoForm.handleSubmit(onSubmitCreateToDo)} className="mb-4 w-full space-y-6 sm:mb-0">
+          <FormField
+            control={createToDoForm.control}
+            name="body.description"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Textarea
+                    placeholder="Type in a new ToDo"
+                    {...field}
+                    onKeyDown={(event) => {
+                      handleOnTextareaDescriptionChange(event);
+                    }}
+                  />
+                </FormControl>
+
+                <FormMessage className="mb-2" />
+              </FormItem>
+            )}
+          />
+        </form>
+      </Form>
+    );
+  }
+
   useEffect(() => {
     getTodos({ page: 0, limit: 10 });
   }, []);
-
-  function onClickCreateTodo() {
-    createTodo({
-      title: "title",
-      description: "description",
-      dueDate: new Date(),
-      priority: "medium",
-    });
-  }
 
   return (
     <div className={clsx("min-h-screen px-1 py-[69px] sm:py-[96px]")}>
@@ -61,35 +94,7 @@ export default function Home() {
           <TableBody>
             <TableRow>
               <TableCell></TableCell>
-              <TableCell>
-                <Form {...createToDoForm}>
-                  <form
-                    onSubmit={createToDoForm.handleSubmit(onSubmitCreateToDo)}
-                    className="mb-4 w-full space-y-6 sm:mb-0"
-                  >
-                    <FormField
-                      control={createToDoForm.control}
-                      name="body.description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Type in a new ToDo"
-                              className="mb-3"
-                              {...field}
-                              onKeyDown={(event) => {
-                                handleOnTextareaDescriptionChange(event);
-                              }}
-                            />
-                          </FormControl>
-
-                          <FormMessage className="mb-2" />
-                        </FormItem>
-                      )}
-                    />
-                  </form>
-                </Form>
-              </TableCell>
+              <TableCell>{getActionComponent()}</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>

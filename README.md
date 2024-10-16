@@ -30,7 +30,7 @@ Expected Use Cases
 
 ├── User Authentication via Web3
 │   ├── ✅ User logs in via connecting their MetaMask wallet
-│   └── User is required to sign a message with their wallet to properly sign in
+│   └── ✅ User is required to sign a message with their wallet to properly sign in
 │
 ├── To-Do List Functionality
 │   └── Authenticated user can:

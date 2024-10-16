@@ -3,7 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "@/components/navbar/Navbar";
 import { EvmWalletSelectorContextController } from "@/context/evm/wallet-selector/EvmWalletSelectorContextController";
-import { TodosContextController } from "@/src/context/todos/TodosContextController";
+import { TodosContextController } from "@/context/todos/TodosContextController";
+import { EvmSignatureVerificationContextController } from "@/context/evm/evm-signature-verification/EvmSignatureVerificationContextController";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,11 +31,13 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <EvmWalletSelectorContextController>
-          <TodosContextController>
-            <Navbar />
+          <EvmSignatureVerificationContextController>
+            <TodosContextController>
+              <Navbar />
 
-            {children}
-          </TodosContextController>
+              {children}
+            </TodosContextController>
+          </EvmSignatureVerificationContextController>
         </EvmWalletSelectorContextController>
       </body>
     </html>
