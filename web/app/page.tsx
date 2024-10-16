@@ -45,9 +45,9 @@ export default function Home() {
             {!isConnected && <Button onClick={handleOnDisplayWidgetClick}>Connect Your Wallet To Create ToDos</Button>}
 
             {isConnected && !ownershipVerification.isSignatureVerified && (
-              <Button onClick={handleOnSignMessage}>
+              <Button onClick={handleOnSignMessage} size="lg">
                 {ownershipVerification.isVerifyingSignature && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-                Authenticate
+                Authenticate To See Your ToDos
               </Button>
             )}
           </>
@@ -57,46 +57,53 @@ export default function Home() {
           <div></div>
         </div>
       </header>
-      <main className="">
-        <section className="flex flex-col sm:flex-row">
-          <div className="w-4/12 px-3">
-            <Card className="mb-12">
-              <CardContent>
-                <Form {...createToDoForm}>
-                  <form
-                    onSubmit={createToDoForm.handleSubmit(onSubmitCreateToDo)}
-                    className="mb-4 w-full space-y-6 sm:mb-0"
-                  >
-                    <FormField
-                      control={createToDoForm.control}
-                      name="body.description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Type in a new ToDo"
-                              {...field}
-                              onKeyDown={(event) => {
-                                handleOnCreateTodoDescriptionChange(event);
-                              }}
-                            />
-                          </FormControl>
 
-                          <FormMessage className="mb-2" />
-                        </FormItem>
-                      )}
-                    />
-                  </form>
-                </Form>
-              </CardContent>
-            </Card>
+      {isConnected && ownershipVerification.isSignatureVerified && (
+        <main className="">
+          <section className="flex flex-col sm:flex-row">
+            <div className="w-4/12 px-3">
+              <Card className="mb-12">
+                <CardContent>
+                  <Form {...createToDoForm}>
+                    <form
+                      onSubmit={createToDoForm.handleSubmit(onSubmitCreateToDo)}
+                      className="mb-4 w-full space-y-6 sm:mb-0"
+                    >
+                      <FormField
+                        control={createToDoForm.control}
+                        name="body.description"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Textarea
+                                placeholder="Type in a new ToDo"
+                                {...field}
+                                onKeyDown={(event) => {
+                                  handleOnCreateTodoDescriptionChange(event);
+                                }}
+                              />
+                            </FormControl>
 
-            {todos.map((todo) => (
-              <UpdateTodoForm todo={todo} key={todo.id} />
-            ))}
-          </div>
-        </section>
-      </main>
+                            <FormMessage className="mb-2" />
+                          </FormItem>
+                        )}
+                      />
+                    </form>
+                  </Form>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+
+          <section className="flex flex-col sm:flex-row">
+            <div className="w-4/12 px-3">
+              {todos.map((todo) => (
+                <UpdateTodoForm todo={todo} key={todo.id} />
+              ))}
+            </div>
+          </section>
+        </main>
+      )}
     </div>
   );
 }

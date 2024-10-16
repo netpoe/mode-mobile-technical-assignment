@@ -6,6 +6,7 @@ import { TodosContext } from "./TodosContext";
 import { TodosContextControllerProps, TodosContextType } from "./TodosContext.types";
 import {
   CreateToDoValidationType,
+  DeleteToDoValidationType,
   GetToDosValidationType,
   UpdateToDoValidationType,
 } from "dummy-todo-api/v1/todo/validation";
@@ -86,9 +87,22 @@ export const TodosContextController = ({ children }: TodosContextControllerProps
     }
   }
 
+  async function deleteTodo(params: DeleteToDoValidationType["params"]) {
+    try {
+      const result = await ToDosService.deleteTodo(params);
+
+      await getTodos({ page: 0, limit: 10 });
+
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const props: TodosContextType = {
     createTodo,
     updateTodo,
+    deleteTodo,
     getTodos,
     todos,
     createToDoForm,

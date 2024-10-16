@@ -1,6 +1,7 @@
 import { ToDo } from "dummy-todo-api/v1/todo/controller";
 import {
   CreateToDoValidationType,
+  DeleteToDoValidationType,
   GetToDosValidationType,
   UpdateToDoValidationType,
 } from "dummy-todo-api/v1/todo/validation";
@@ -15,6 +16,7 @@ export type TodosContextType = {
   todos: ToDo[];
   createToDoForm: UseFormReturn<CreateToDoValidationType>;
   createTodo: (_body: CreateToDoValidationType["body"]) => Promise<void>;
+  deleteTodo: (_params: DeleteToDoValidationType["params"]) => Promise<void>;
   updateTodo: (
     _body: UpdateToDoValidationType["body"],
     _params: UpdateToDoValidationType["params"],

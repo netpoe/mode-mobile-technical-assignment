@@ -7,6 +7,7 @@ import { OpenAPI } from "../core/OpenAPI";
 import { request as __request } from "../core/request";
 import {
   CreateToDoValidationType,
+  DeleteToDoValidationType,
   GetToDosValidationType,
   UpdateToDoValidationType,
 } from "dummy-todo-api/v1/todo/validation";
@@ -14,7 +15,21 @@ import { ToDo, GetTodosResponse } from "dummy-todo-api/v1/todo/controller";
 
 export class ToDosService {
   /**
-   * create
+   * delete
+   * @param body
+   * @returns any Successful response
+   * @throws ApiError
+   */
+  public static deleteTodo(params: DeleteToDoValidationType["params"]): CancelablePromise<ToDo> {
+    return __request(OpenAPI, {
+      method: "DELETE",
+      url: `/todos/${params.id}`,
+      mediaType: "application/json",
+    });
+  }
+
+  /**
+   * update
    * @param body
    * @returns any Successful response
    * @throws ApiError
