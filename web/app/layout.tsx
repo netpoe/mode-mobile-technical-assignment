@@ -5,6 +5,7 @@ import { Navbar } from "@/components/navbar/Navbar";
 import { EvmWalletSelectorContextController } from "@/context/evm/wallet-selector/EvmWalletSelectorContextController";
 import { TodosContextController } from "@/context/todos/TodosContextController";
 import { EvmSignatureVerificationContextController } from "@/context/evm/evm-signature-verification/EvmSignatureVerificationContextController";
+import { Erc20ContextController } from "@/context/evm/erc20/Erc20ContextController";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,11 +33,13 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <EvmWalletSelectorContextController>
           <EvmSignatureVerificationContextController>
-            <TodosContextController>
-              <Navbar />
+            <Erc20ContextController>
+              <TodosContextController>
+                <Navbar />
 
-              {children}
-            </TodosContextController>
+                {children}
+              </TodosContextController>
+            </Erc20ContextController>
           </EvmSignatureVerificationContextController>
         </EvmWalletSelectorContextController>
       </body>

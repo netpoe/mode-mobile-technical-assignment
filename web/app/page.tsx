@@ -12,12 +12,16 @@ import { Button } from "@/components/ui/button";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Card, CardContent } from "@/components/ui/card";
 import { UpdateTodoForm } from "@/components/todos/update-todo-form/UpdateTodoForm";
+import { useErc20Context } from "@/context/evm/erc20/useErc20Context";
+import { CustomLabel } from "@/components/custom-label/CustomLabel";
 
 export default function Home() {
   const { handleOnSignMessage, handleOnDisplayWidgetClick, ownershipVerification } =
     useEvmSignatureVerificationContext();
 
   const { createTodo, getTodos, todos, createToDoForm } = useTodosContext();
+
+  const { contract: ERC20Contract } = useErc20Context();
 
   const { isConnected } = useAccount();
 
@@ -53,7 +57,14 @@ export default function Home() {
           </>
         </div>
         <div className="w-full sm:w-6/12">
-          <div className="flex flex-col py-4 sm:mb-4 sm:flex-row sm:py-0 [&>div:not(:last-child)]:mb-2 [&>div:not(:last-child)]:sm:mb-0 [&>div:not(:last-child)]:sm:mr-2"></div>
+          <div className="flex flex-col justify-end py-4 sm:mb-4 sm:flex-row sm:py-0 [&>div:not(:last-child)]:mb-2 [&>div:not(:last-child)]:sm:mb-0 [&>div:not(:last-child)]:sm:mr-2">
+            <CustomLabel>
+              <CustomLabel.Head>ERC20 Balance</CustomLabel.Head>
+              <CustomLabel.Description>
+                {ERC20Contract?.symbol} {ERC20Contract?.balanceOf}
+              </CustomLabel.Description>
+            </CustomLabel>
+          </div>
           <div></div>
         </div>
       </header>

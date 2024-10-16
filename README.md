@@ -37,11 +37,11 @@ Expected Use Cases
 │       ├── ✅ Create to-do items via the provided API
 │       ├── ✅ Read to-do items   via the provided API
 │       ├── ✅ Update to-do items via the provided API
-│       └── Delete to-do items via the provided API
+│       └── ✅ Delete to-do items via the provided API
 │
 ├── Web3 Functionalities
 │   └── Authenticated user must:
-│       ├── View current ERC20 token balance                             (ERC20 Address below)
+│       ├── ✅ View current ERC20 token balance                             (ERC20 Address below)
 │       ├── Mint an NFT after 2 to do list items are marked completed    (ERC721 Address below)
 │       │   └── The mint button must be initially disabled until completed the tasks.
 │       │   └── The mint transaction must await a specified number of blocks,

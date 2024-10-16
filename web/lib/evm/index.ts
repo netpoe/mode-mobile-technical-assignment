@@ -1,4 +1,5 @@
-import { ERC721Instance } from "./ERC721Instance";
+import { parseEther } from "viem";
+import { ERC721Instance } from "./ERC721/ERC721Instance";
 import { truncate } from "./format";
 import { localPublicClient, localWalletClient } from "./localViemClient";
 
@@ -10,6 +11,7 @@ const getBlockExplorerUrl = () =>
 const e = {
   ERC721Instance,
   getBlockExplorerUrl,
+  parseEther,
   format: {
     truncate,
   },
