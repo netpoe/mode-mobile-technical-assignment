@@ -34,9 +34,9 @@ Expected Use Cases
 │
 ├── To-Do List Functionality
 │   └── Authenticated user can:
-│       ├── Create to-do items via the provided API
-│       ├── Read to-do items   via the provided API
-│       ├── Update to-do items via the provided API
+│       ├── ✅ Create to-do items via the provided API
+│       ├── ✅ Read to-do items   via the provided API
+│       ├── ✅ Update to-do items via the provided API
 │       └── Delete to-do items via the provided API
 │
 ├── Web3 Functionalities

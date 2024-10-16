@@ -4,10 +4,14 @@ import React, { useState } from "react";
 
 import { TodosContext } from "./TodosContext";
 import { TodosContextControllerProps, TodosContextType } from "./TodosContext.types";
-import { CreateToDoValidationType, GetToDosValidationType } from "dummy-todo-api/v1/todo/validation";
+import {
+  CreateToDoValidationType,
+  GetToDosValidationType,
+  UpdateToDoValidationType,
+} from "dummy-todo-api/v1/todo/validation";
 import { ToDosService } from "@/lib/api-client";
 import { ToDo } from "dummy-todo-api/v1/todo/controller";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
@@ -64,8 +68,27 @@ export const TodosContextController = ({ children }: TodosContextControllerProps
     }
   }
 
+  async function updateTodo(
+    body: UpdateToDoValidationType["body"],
+    params: UpdateToDoValidationType["params"],
+    updateToDoForm: UseFormReturn<UpdateToDoValidationType>,
+  ) {
+    try {
+      const result = await ToDosService.updateTodo(body, params);
+
+      await getTodos({ page: 0, limit: 10 });
+
+      updateToDoForm.clearErrors();
+
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const props: TodosContextType = {
     createTodo,
+    updateTodo,
     getTodos,
     todos,
     createToDoForm,
