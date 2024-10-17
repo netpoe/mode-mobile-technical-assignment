@@ -43,17 +43,17 @@ export default function RootLayout({
       <body className={`${PPNeueMachina.variable} antialiased`}>
         <EvmWalletSelectorContextController cookies={cookies}>
           <EvmSignatureVerificationContextController>
-            <Erc20ContextController>
-              <Erc721ContextController>
-                <TodosContextController>
+            <TodosContextController>
+              <Erc20ContextController>
+                <Erc721ContextController>
                   <Navbar />
 
                   {children}
 
                   <Toaster />
-                </TodosContextController>
-              </Erc721ContextController>
-            </Erc20ContextController>
+                </Erc721ContextController>
+              </Erc20ContextController>
+            </TodosContextController>
           </EvmSignatureVerificationContextController>
         </EvmWalletSelectorContextController>
       </body>

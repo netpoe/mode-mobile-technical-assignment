@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type MintProps = {
+export type Erc721BurnButtonProps = {
   children?: ReactNode;
   className?: string;
 };

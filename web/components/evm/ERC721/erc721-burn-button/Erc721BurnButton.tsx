@@ -1,16 +1,17 @@
-import { MintProps } from "./Mint.types";
-import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
-import evm from "@/lib/evm";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { useErc20Context } from "@/context/evm/erc20/useErc20Context";
-import { ERC721Instance } from "@/lib/evm/ERC721/ERC721Instance";
-import { useErc721Context } from "@/context/evm/erc721/useErc721Context";
 import clsx from "clsx";
+import { Erc721BurnButtonProps } from "./Erc721BurnButton.types";
+import { useEffect } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { useErc20Context } from "@/context/evm/erc20/useErc20Context";
+import { useTodosContext } from "@/context/todos/useTodosContext";
+import { useEvmSignatureVerificationContext } from "@/context/evm/evm-signature-verification/useEvmSignatureVerificationContext";
+import { Button } from "@/components/ui/button";
+import { ERC721Instance } from "@/lib/evm/ERC721/ERC721Instance";
+import evm from "@/lib/evm";
+import { useErc721Context } from "@/context/evm/erc721/useErc721Context";
 
-export const ERC721MintButton: React.FC<MintProps> = ({ className }) => {
+export const Erc721BurnButton: React.FC<Erc721BurnButtonProps> = ({ className }) => {
   const {
     data: hash,
     isPending,
@@ -27,18 +28,26 @@ export const ERC721MintButton: React.FC<MintProps> = ({ className }) => {
 
   const { contract: ERC20Contract, fetchContractValues: fetchERC20ContractValues } = useErc20Context();
 
-  const { toast } = useToast();
+  const {
+    isMintingEnabled,
+    tokenIds,
+    fetchContractValues: fetchERC721ContractValues,
+    contract: ERC721Contract,
+  } = useErc721Context();
 
-  const { isMintingEnabled } = useErc721Context();
+  const { toast } = useToast();
 
   console.log({ writeContractError });
 
-  function onClickMintNFT() {
+  function onClickBurnNFT() {
     try {
+      console.log(tokenIds);
+
       writeContract({
         abi: ERC721Instance.defaultABI,
         address: ERC721Instance.defaultContractAddress,
-        functionName: "mint",
+        functionName: "burn",
+        args: [tokenIds[tokenIds.length - 1]],
       });
     } catch (error) {
       console.error(error);
@@ -54,7 +63,7 @@ export const ERC721MintButton: React.FC<MintProps> = ({ className }) => {
     if (!isPending) return;
 
     toast({
-      title: "Your Mint Is Processing",
+      title: "Your Burn Is Processing",
       description: `Your transaction should reflect after ${evm.const.DEFAULT_TX_CONFIRMATIONS_COUNT} confirmation(s).`,
     });
   }, [isPending]);
@@ -63,8 +72,8 @@ export const ERC721MintButton: React.FC<MintProps> = ({ className }) => {
     if (!isSuccess) return;
 
     toast({
-      title: "Your Mint Went Through!",
-      description: `Enjoy your new NFT. Keep your productivity forward!`,
+      title: "Your Burn Went Through!",
+      description: `You should have received ERC20 tokens!`,
     });
   }, [isSuccess]);
 
@@ -73,26 +82,27 @@ export const ERC721MintButton: React.FC<MintProps> = ({ className }) => {
 
     toast({
       title: "Something Went Wrong",
-      description: `Your mint transaction didn't go through. Try again?`,
+      description: `Your burn transaction didn't go through. Try again?`,
       variant: "destructive",
     });
   }, [isError]);
 
   useEffect(() => {
-    if (!isSuccess || !ERC20Contract) return;
+    if (!isSuccess || !ERC20Contract || !ERC721Contract) return;
 
     fetchERC20ContractValues(ERC20Contract);
-  }, [isSuccess, ERC20Contract, fetchERC20ContractValues]);
+    fetchERC721ContractValues(ERC721Contract);
+  }, [isSuccess, ERC20Contract, fetchERC20ContractValues, ERC721Contract]);
 
   return (
     <Button
-      size="lg"
+      className={clsx("mr-4", className)}
+      size="sm"
+      variant="ghost"
+      onClick={onClickBurnNFT}
       disabled={!isMintingEnabled}
-      onClick={onClickMintNFT}
-      className={clsx("mb-4 w-full sm:mb-0 sm:w-auto", className)}
     >
-      {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-      Mint My NFT!
+      Burn
     </Button>
   );
 };

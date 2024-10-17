@@ -1,4 +1,4 @@
-import { Client, getContract, parseEther } from "viem";
+import { Client, formatEther, getContract, parseEther } from "viem";
 
 import ABI from "./ERC20-ABI.json";
 import { ZeroXAddress } from "../evm.types";
@@ -46,9 +46,9 @@ export class ERC20Instance {
     if (!address) return this;
 
     try {
-      const _balanceOf: BigInt = await this.contract.read.balanceOf([address]);
+      const _balanceOf: bigint = await this.contract.read.balanceOf([address]);
 
-      this.balanceOf = parseEther(_balanceOf.toString()).toString();
+      this.balanceOf = formatEther(_balanceOf).toString();
     } catch (error) {
       console.error(error);
     }

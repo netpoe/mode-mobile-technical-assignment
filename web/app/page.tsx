@@ -16,6 +16,7 @@ import { useErc20Context } from "@/context/evm/erc20/useErc20Context";
 import { CustomLabel } from "@/components/custom-label/CustomLabel";
 import { useErc721Context } from "@/context/evm/erc721/useErc721Context";
 import { ERC721MintButton } from "@/components/evm/ERC721/mint/Mint";
+import { Erc721BurnButton } from "@/components/evm/ERC721/erc721-burn-button/Erc721BurnButton";
 
 export default function Home() {
   const { handleOnSignMessage, handleOnDisplayWidgetClick, ownershipVerification } =
@@ -77,15 +78,7 @@ export default function Home() {
               <>
                 <CustomLabel className="text-right">
                   <CustomLabel.Head className="justify-between">
-                    {/* <Button
-                      className="mr-4"
-                      size="sm"
-                      variant="ghost"
-                      onClick={onClickBurnNFT}
-                      disabled={!isMintingEnabled}
-                    >
-                      Burn
-                    </Button> */}
+                    <Erc721BurnButton />
                     <h5 className="mb-0">{ERC71Contract?.name} Balance</h5>
                   </CustomLabel.Head>
                   <CustomLabel.Description className="justify-end">

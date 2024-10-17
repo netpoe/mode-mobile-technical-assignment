@@ -10,6 +10,8 @@ export type Erc721ContextControllerProps = {
 
 export type Erc721ContextType = {
   contract?: ERC721Instance;
+  isMintingEnabled: boolean;
+  tokenIds: bigint[];
   loadContract: () => void;
   fetchContractValues: (_contract: ERC721Instance) => void;
 };
