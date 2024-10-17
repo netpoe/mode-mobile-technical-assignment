@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 import { TodosContext } from "./TodosContext";
-import { TodosContextControllerProps, TodosContextType } from "./TodosContext.types";
+import { TodosContextControllerActions, TodosContextControllerProps, TodosContextType } from "./TodosContext.types";
 import {
   CreateToDoValidationType,
   DeleteToDoValidationType,
@@ -18,6 +18,7 @@ import { z } from "zod";
 
 export const TodosContextController = ({ children }: TodosContextControllerProps) => {
   const [todos, setTodos] = useState<ToDo[]>([]);
+  const [actions, setActions] = useState<TodosContextControllerActions>({});
 
   const createToDoForm = useForm<CreateToDoValidationType>({
     // Tried to import from api -> ToDoValidation, but it throws a depth Error.
@@ -100,6 +101,7 @@ export const TodosContextController = ({ children }: TodosContextControllerProps
   }
 
   const props: TodosContextType = {
+    actions,
     createTodo,
     updateTodo,
     deleteTodo,

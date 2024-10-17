@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write 'app/**/*.{js,jsx,ts,tsx,css,html}'"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,html}'"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

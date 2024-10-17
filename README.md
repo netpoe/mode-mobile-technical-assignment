@@ -51,9 +51,9 @@ Expected Use Cases
 │               After successfull burn, the ERC20 balance must be updated in the UI.
 │
 └── User Logout
-    ├── User logs out
-    ├── All the above data and UI elements disappear
-    └── Only the option to log in with the wallet remains
+    ├── ✅ User logs out
+    ├── ✅ All the above data and UI elements disappear
+    └── ✅ Only the option to log in with the wallet remains
 ```
 
 - **Blockchain and Network Choice:**

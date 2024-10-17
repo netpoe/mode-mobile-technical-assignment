@@ -12,9 +12,12 @@ export type TodosContextControllerProps = {
   children: ReactNode;
 };
 
+export type TodosContextControllerActions = {};
+
 export type TodosContextType = {
   todos: ToDo[];
   createToDoForm: UseFormReturn<CreateToDoValidationType>;
+  actions: TodosContextControllerActions;
   createTodo: (_body: CreateToDoValidationType["body"]) => Promise<void>;
   deleteTodo: (_params: DeleteToDoValidationType["params"]) => Promise<void>;
   updateTodo: (

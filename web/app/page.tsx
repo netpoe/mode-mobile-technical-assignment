@@ -58,16 +58,18 @@ export default function Home() {
         </div>
         <div className="w-full sm:w-6/12">
           <div className="flex flex-col justify-end py-4 sm:mb-4 sm:flex-row sm:py-0 [&>div:not(:last-child)]:mb-2 [&>div:not(:last-child)]:sm:mb-0 [&>div:not(:last-child)]:sm:mr-2">
-            <CustomLabel>
-              <CustomLabel.Head>
-                <h4 className="mb-0">ERC20 Balance</h4>
-              </CustomLabel.Head>
-              <CustomLabel.Description>
-                <p className="mb-0">
-                  {ERC20Contract?.symbol} {ERC20Contract?.balanceOf}
-                </p>
-              </CustomLabel.Description>
-            </CustomLabel>
+            {isConnected && (
+              <CustomLabel className="text-right">
+                <CustomLabel.Head>
+                  <h5 className="mb-0">ERC20 Balance</h5>
+                </CustomLabel.Head>
+                <CustomLabel.Description>
+                  <h4 className="mb-0">
+                    {ERC20Contract?.symbol} {ERC20Contract?.balanceOf}
+                  </h4>
+                </CustomLabel.Description>
+              </CustomLabel>
+            )}
           </div>
           <div></div>
         </div>
@@ -91,7 +93,7 @@ export default function Home() {
                           <FormItem>
                             <FormControl>
                               <Textarea
-                                placeholder="Type in a new ToDo"
+                                placeholder="Type in a new ToDo. Press enter to save."
                                 {...field}
                                 onKeyDown={(event) => {
                                   handleOnCreateTodoDescriptionChange(event);
