@@ -48,8 +48,8 @@ export default function Home() {
 
   return (
     <div className={clsx("min-h-screen px-1 py-[69px] sm:py-[96px]")}>
-      <header className="mb-14 flex flex-col items-center justify-between py-10 sm:flex-row [&>div]:sm:px-4">
-        <div className="w-full sm:w-6/12">
+      <header className="mb-14 flex flex-col items-center justify-between py-10 sm:flex-row [&>div]:px-4 [&>div]:sm:px-4">
+        <div className="mb-6 w-full sm:mb-0 sm:w-6/12">
           <h1 className="text-2xl sm:text-4xl">Good Day!</h1>
           <p className="text-muted-foreground">Today Is {new Date().toDateString()} — What are you up to now?</p>
           <div className="flex flex-col sm:flex-row [&>button]:mr-4">
@@ -57,13 +57,13 @@ export default function Home() {
               <ERC721MintButton />
 
               {!isConnected && (
-                <Button onClick={handleOnDisplayWidgetClick} size="lg">
+                <Button onClick={handleOnDisplayWidgetClick} size="lg" className="w-full sm:w-auto">
                   Connect Your Wallet To Create ToDos
                 </Button>
               )}
 
               {isConnected && !ownershipVerification.isSignatureVerified && (
-                <Button onClick={handleOnSignMessage} size="lg">
+                <Button onClick={handleOnSignMessage} size="lg" className="w-full sm:w-auto">
                   {ownershipVerification.isVerifyingSignature && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
                   Authenticate To See Your ToDos
                 </Button>
@@ -114,7 +114,7 @@ export default function Home() {
       {isConnected && ownershipVerification.isSignatureVerified && (
         <main className="">
           <section className="flex flex-col sm:flex-row">
-            <div className="w-4/12 px-3">
+            <div className="px-3 sm:w-4/12">
               <Card className="mb-12">
                 <CardContent>
                   <Form {...createToDoForm}>
@@ -149,7 +149,7 @@ export default function Home() {
           </section>
 
           <section className="flex flex-col sm:flex-row">
-            <div className="w-4/12 px-3">
+            <div className="px-3 sm:w-4/12">
               {todos.map((todo) => (
                 <UpdateTodoForm todo={todo} key={todo.id} />
               ))}

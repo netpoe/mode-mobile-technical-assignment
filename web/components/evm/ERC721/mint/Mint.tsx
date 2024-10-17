@@ -59,7 +59,7 @@ export const ERC721MintButton: React.FC<MintProps> = ({ children, className }) =
 
     toast({
       title: "Your Mint Is Processing",
-      description: `Your transaction should reflect after ${evm.const.DEFAULT_TX_CONFIRMATIONS_COUNT}`,
+      description: `Your transaction should reflect after ${evm.const.DEFAULT_TX_CONFIRMATIONS_COUNT} confirmation(s).`,
     });
   }, [isPending]);
 
@@ -92,7 +92,7 @@ export const ERC721MintButton: React.FC<MintProps> = ({ children, className }) =
     isConnected && ownershipVerification.isSignatureVerified && todos.filter((todo) => todo.completed).length >= 2;
 
   return (
-    <Button size="lg" disabled={!isMintingEnabled} onClick={onClickMintNFT}>
+    <Button size="lg" disabled={!isMintingEnabled} onClick={onClickMintNFT} className="mb-4 w-full sm:mb-0 sm:w-auto">
       {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
       Mint My NFT!
     </Button>
