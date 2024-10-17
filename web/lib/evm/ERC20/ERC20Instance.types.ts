@@ -1,8 +1,9 @@
-export type TokenMetadata = {
-  id: number;
-  author: string;
-  name: string;
-  description: string;
-  image: string;
-  thumbnail: string;
+import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+import { ReadContractErrorType } from "viem";
+
+export type RefetchFnType = (options?: RefetchOptions) => Promise<QueryObserverResult<unknown, ReadContractErrorType>>;
+
+export type BalanceOf = {
+  value: bigint;
+  refetch?: RefetchFnType;
 };

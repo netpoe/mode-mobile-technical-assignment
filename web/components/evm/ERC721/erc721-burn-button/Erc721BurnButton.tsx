@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ERC721Instance } from "@/lib/evm/ERC721/ERC721Instance";
 import evm from "@/lib/evm";
 import { useErc721Context } from "@/context/evm/erc721/useErc721Context";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 export const Erc721BurnButton: React.FC<Erc721BurnButtonProps> = ({ className }) => {
   const {
@@ -36,8 +37,6 @@ export const Erc721BurnButton: React.FC<Erc721BurnButtonProps> = ({ className })
   } = useErc721Context();
 
   const { toast } = useToast();
-
-  console.log({ writeContractError });
 
   function onClickBurnNFT() {
     try {
@@ -80,6 +79,8 @@ export const Erc721BurnButton: React.FC<Erc721BurnButtonProps> = ({ className })
   useEffect(() => {
     if (!isError) return;
 
+    console.log({ writeContractError });
+
     toast({
       title: "Something Went Wrong",
       description: `Your burn transaction didn't go through. Try again?`,
@@ -90,8 +91,13 @@ export const Erc721BurnButton: React.FC<Erc721BurnButtonProps> = ({ className })
   useEffect(() => {
     if (!isSuccess || !ERC20Contract || !ERC721Contract) return;
 
-    fetchERC20ContractValues(ERC20Contract);
-    fetchERC721ContractValues(ERC721Contract);
+    console.log(ERC20Contract.balanceOf);
+
+    const refetch = ERC20Contract.balanceOf?.refetch || undefined;
+
+    if (!refetch) return;
+
+    refetch();
   }, [isSuccess, ERC20Contract, fetchERC20ContractValues, ERC721Contract]);
 
   return (
@@ -102,6 +108,7 @@ export const Erc721BurnButton: React.FC<Erc721BurnButtonProps> = ({ className })
       onClick={onClickBurnNFT}
       disabled={!isMintingEnabled}
     >
+      {isLoading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
       Burn
     </Button>
   );

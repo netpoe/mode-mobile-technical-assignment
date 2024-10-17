@@ -2,6 +2,7 @@ import { Client, formatEther, getContract, parseEther } from "viem";
 
 import ABI from "./ERC20-ABI.json";
 import { ZeroXAddress } from "../evm.types";
+import { BalanceOf } from "./ERC20Instance.types";
 
 export const POLYGON_AMOY_DEFAULT_ERC20_ADDRESS = "0xf02f35bF1C8D2c3a1e7255FD9AddC8F2182e0627";
 
@@ -15,7 +16,10 @@ export class ERC20Instance {
 
   name?: string;
   symbol?: string;
-  balanceOf?: string = "0";
+
+  balanceOf?: BalanceOf = {
+    value: 0n,
+  };
 
   constructor(address: string, abi: any, client: Client) {
     this.address = address as ZeroXAddress;
@@ -38,20 +42,6 @@ export class ERC20Instance {
     const _symbol = await this.contract.read.symbol();
 
     this.symbol = _symbol;
-
-    return this;
-  }
-
-  async getBalanceOf(address: ZeroXAddress): Promise<ERC20Instance> {
-    if (!address) return this;
-
-    try {
-      const _balanceOf: bigint = await this.contract.read.balanceOf([address]);
-
-      this.balanceOf = formatEther(_balanceOf).toString();
-    } catch (error) {
-      console.error(error);
-    }
 
     return this;
   }

@@ -17,6 +17,7 @@ import { CustomLabel } from "@/components/custom-label/CustomLabel";
 import { useErc721Context } from "@/context/evm/erc721/useErc721Context";
 import { ERC721MintButton } from "@/components/evm/ERC721/mint/Mint";
 import { Erc721BurnButton } from "@/components/evm/ERC721/erc721-burn-button/Erc721BurnButton";
+import { Erc20BalanceOf } from "@/components/evm/ERC20/erc20-balance-of/Erc20BalanceOf";
 
 export default function Home() {
   const { handleOnSignMessage, handleOnDisplayWidgetClick, ownershipVerification } =
@@ -93,7 +94,7 @@ export default function Home() {
                   </CustomLabel.Head>
                   <CustomLabel.Description className="justify-end">
                     <h4 className="mb-0">
-                      {ERC20Contract?.symbol} {ERC20Contract?.balanceOf}
+                      <Erc20BalanceOf />
                     </h4>
                   </CustomLabel.Description>
                 </CustomLabel>

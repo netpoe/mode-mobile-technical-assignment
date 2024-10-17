@@ -31,8 +31,6 @@ export const ERC721MintButton: React.FC<MintProps> = ({ className }) => {
 
   const { isMintingEnabled } = useErc721Context();
 
-  console.log({ writeContractError });
-
   function onClickMintNFT() {
     try {
       writeContract({
@@ -70,6 +68,8 @@ export const ERC721MintButton: React.FC<MintProps> = ({ className }) => {
 
   useEffect(() => {
     if (!isError) return;
+
+    console.log({ writeContractError });
 
     toast({
       title: "Something Went Wrong",

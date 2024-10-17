@@ -36,7 +36,7 @@ export const Erc20ContextController = ({ children, abi, address: contractAddress
     if (!_contract) return;
 
     try {
-      await Promise.all([_contract.getName(), _contract.getSymbol(), _contract.getBalanceOf(address!)]);
+      await Promise.all([_contract.getName(), _contract.getSymbol()]);
     } catch (error) {
       console.error(error);
     }
