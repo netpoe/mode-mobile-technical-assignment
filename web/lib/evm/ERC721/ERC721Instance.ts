@@ -1,15 +1,25 @@
-import { Client, getContract } from "viem";
-import axios from "axios";
-
+import { Client, getContract, parseEther } from "viem";
+import ABI from "./ERC721-ABI.json";
 import { ZeroXAddress } from "@/context/evm/wallet-selector/EvmWalletSelectorContext.types";
+import { type Config, UseWriteContractReturnType } from "wagmi";
+import { WriteContractMutate } from "wagmi/query";
 
-export const SEPOLIA_TESTNET_ADDRESS = "0x8E1096fd5C8Ca1EFdC1BC2F64Ae439E0888b1A46";
-export const ETHEREUM_MAINNET_ADDRESS = "0x8E1096fd5C8Ca1EFdC1BC2F64Ae439E0888b1A46";
+export const POLYGON_AMOY_DEFAULT_ERC721_ADDRESS = "0x8E1096fd5C8Ca1EFdC1BC2F64Ae439E0888b1A46";
 
 export class ERC721Instance {
+  static defaultContractAddress = POLYGON_AMOY_DEFAULT_ERC721_ADDRESS;
+  static defaultABI = ABI.abi;
+
   contract: any;
 
   address: ZeroXAddress;
+
+  name?: string;
+  symbol?: string;
+  totalSupply?: string;
+  balanceOf?: string = "0";
+
+  writeContractFn?: WriteContractMutate<Config, unknown>;
 
   constructor(address: string, abi: any, client: Client) {
     this.address = address as ZeroXAddress;
@@ -20,6 +30,10 @@ export class ERC721Instance {
     });
   }
 
+  setWriteContractHandler(_writeContractFn: WriteContractMutate<Config, unknown>) {
+    this.writeContractFn = _writeContractFn;
+  }
+
   async ownerOf(tokenId: number) {
     return await this.contract.read.ownerOf([BigInt(tokenId)]);
   }
@@ -28,51 +42,78 @@ export class ERC721Instance {
     return await this.contract.read.tokenURI([BigInt(tokenId)]);
   }
 
-  async name() {
-    return await this.contract.read.name();
+  async getName() {
+    const _name = await this.contract.read.name();
+
+    this.name = _name;
+
+    return this;
   }
 
-  async symbol() {
-    return await this.contract.read.symbol();
+  async getSymbol() {
+    const _symbol = await this.contract.read.symbol();
+
+    this.symbol = _symbol;
+
+    return this;
   }
 
-  async author() {
-    return await this.contract.read.author();
-  }
+  async getBalanceOf(address: ZeroXAddress): Promise<ERC721Instance> {
+    if (!address) return this;
 
-  async totalSupply() {
-    return await this.contract.read.totalSupply();
-  }
-
-  async tokenLimit() {
-    const tokenLimit = await this.contract.read.tokenLimit();
-
-    console.log(`ERC721Instance.getTokenMetadata`, tokenLimit);
-
-    return tokenLimit;
-  }
-
-  static get defaultContractAddress() {
-    return process.env.NEXT_PUBLIC_DEFAULT_NETWORK_ENV === "testnet"
-      ? SEPOLIA_TESTNET_ADDRESS
-      : ETHEREUM_MAINNET_ADDRESS;
-  }
-
-  static async getTokenMetadata(tokenURI: string) {
     try {
-      const result = await axios.get(tokenURI, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const _balanceOf: BigInt = await this.contract.read.balanceOf([address]);
 
-      console.log(`ERC721Instance.getTokenMetadata`, result.data);
-
-      return result;
+      this.balanceOf = _balanceOf.toString();
     } catch (error) {
       console.error(error);
     }
 
-    return undefined;
+    return this;
+  }
+
+  async getTotalSupply() {
+    const _totalSupply = await this.contract.read.totalSupply();
+
+    this.totalSupply = _totalSupply;
+
+    return this;
+  }
+
+  async mint() {
+    try {
+      if (!this.writeContractFn) {
+        throw new Error("writeContractFn is not set");
+      }
+
+      this.writeContractFn({
+        abi: ERC721Instance.defaultABI,
+        address: ERC721Instance.defaultContractAddress as ZeroXAddress,
+        functionName: "mint",
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
+    return this;
+  }
+
+  async burn() {
+    try {
+      if (!this.writeContractFn) {
+        throw new Error("writeContractFn is not set");
+      }
+
+      this.writeContractFn({
+        abi: ERC721Instance.defaultABI,
+        address: ERC721Instance.defaultContractAddress as ZeroXAddress,
+        functionName: "burn",
+        args: [],
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
+    return this;
   }
 }

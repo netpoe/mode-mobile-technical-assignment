@@ -14,6 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { UpdateTodoForm } from "@/components/todos/update-todo-form/UpdateTodoForm";
 import { useErc20Context } from "@/context/evm/erc20/useErc20Context";
 import { CustomLabel } from "@/components/custom-label/CustomLabel";
+import { useErc721Context } from "@/context/evm/erc721/useErc721Context";
 
 export default function Home() {
   const { handleOnSignMessage, handleOnDisplayWidgetClick, ownershipVerification } =
@@ -23,10 +24,20 @@ export default function Home() {
 
   const { contract: ERC20Contract } = useErc20Context();
 
+  const { contract: ERC71Contract, mint, burn } = useErc721Context();
+
   const { isConnected } = useAccount();
 
   function onSubmitCreateToDo(data: CreateToDoValidationType) {
     createTodo(data.body);
+  }
+
+  function onClickMintNFT() {
+    mint();
+  }
+
+  function onClickBurnNFT() {
+    burn();
   }
 
   function handleOnCreateTodoDescriptionChange(event: KeyboardEvent<HTMLTextAreaElement>) {
@@ -34,6 +45,8 @@ export default function Home() {
       onSubmitCreateToDo(createToDoForm.getValues());
     }
   }
+
+  const isMintingEnabled = isConnected && ownershipVerification.isSignatureVerified && todos.filter(todo => todo.completed).length >= 2;
 
   useEffect(() => {
     getTodos({ page: 0, limit: 10 });
@@ -45,30 +58,46 @@ export default function Home() {
         <div className="w-full sm:w-6/12">
           <h1 className="text-2xl sm:text-4xl">Good Day!</h1>
           <p className="text-muted-foreground">Today Is {new Date().toDateString()} — What are you up to now?</p>
-          <>
-            {!isConnected && <Button onClick={handleOnDisplayWidgetClick}>Connect Your Wallet To Create ToDos</Button>}
+          <div className="flex sm:flex-row flex-col [&>button]:mr-4">
+            <>
+              <Button size="lg" disabled={!isMintingEnabled} onClick={onClickMintNFT}>Mint My NFT!</Button>
 
-            {isConnected && !ownershipVerification.isSignatureVerified && (
-              <Button onClick={handleOnSignMessage} size="lg">
-                {ownershipVerification.isVerifyingSignature && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-                Authenticate To See Your ToDos
-              </Button>
-            )}
-          </>
+              {!isConnected && <Button onClick={handleOnDisplayWidgetClick} size="lg">Connect Your Wallet To Create ToDos</Button>}
+
+              {isConnected && !ownershipVerification.isSignatureVerified && (
+                <Button onClick={handleOnSignMessage} size="lg">
+                  {ownershipVerification.isVerifyingSignature && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+                  Authenticate To See Your ToDos
+                </Button>
+              )}
+            </>
+          </div>
         </div>
         <div className="w-full sm:w-6/12">
           <div className="flex flex-col justify-end py-4 sm:mb-4 sm:flex-row sm:py-0 [&>div:not(:last-child)]:mb-2 [&>div:not(:last-child)]:sm:mb-0 [&>div:not(:last-child)]:sm:mr-2">
             {isConnected && (
-              <CustomLabel className="text-right">
-                <CustomLabel.Head>
-                  <h5 className="mb-0">ERC20 Balance</h5>
-                </CustomLabel.Head>
-                <CustomLabel.Description>
-                  <h4 className="mb-0">
-                    {ERC20Contract?.symbol} {ERC20Contract?.balanceOf}
-                  </h4>
-                </CustomLabel.Description>
-              </CustomLabel>
+              <>
+                <CustomLabel className="text-right">
+                  <CustomLabel.Head className="justify-between">
+                    <Button className="mr-4" size="sm" variant="ghost" onClick={onClickBurnNFT} disabled={!isMintingEnabled}>Burn</Button><h5 className="mb-0">{ERC71Contract?.name} Balance</h5>
+                  </CustomLabel.Head>
+                  <CustomLabel.Description className="justify-end">
+                    <h4 className="mb-0">
+                      {ERC71Contract?.symbol} {ERC71Contract?.balanceOf}
+                    </h4>
+                  </CustomLabel.Description>
+                </CustomLabel>
+                <CustomLabel className="text-right">
+                  <CustomLabel.Head className="justify-end">
+                    <h5 className="mb-0">ERC20 Balance</h5>
+                  </CustomLabel.Head>
+                  <CustomLabel.Description className="justify-end">
+                    <h4 className="mb-0">
+                      {ERC20Contract?.symbol} {ERC20Contract?.balanceOf}
+                    </h4>
+                  </CustomLabel.Description>
+                </CustomLabel>
+              </>
             )}
           </div>
           <div></div>

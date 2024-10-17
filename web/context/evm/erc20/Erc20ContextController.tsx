@@ -24,9 +24,9 @@ export const Erc20ContextController = ({ children, abi, address: contractAddress
         publicClient,
       );
 
-      const instance = await fetchContractValues(_contract);
+      await fetchContractValues(_contract);
 
-      setContract(instance);
+      setContract(_contract);
     } catch (error) {
       console.error(error);
     }
@@ -36,14 +36,11 @@ export const Erc20ContextController = ({ children, abi, address: contractAddress
     if (!_contract) return;
 
     try {
-      const instances = await Promise.all([
+      await Promise.all([
         _contract.getName(),
         _contract.getSymbol(),
         _contract.getBalanceOf(address!),
       ]);
-      const instance = instances[instances.length - 1];
-
-      return instance;
     } catch (error) {
       console.error(error);
     }

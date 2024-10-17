@@ -7,6 +7,7 @@ import { TodosContextController } from "@/context/todos/TodosContextController";
 import { EvmSignatureVerificationContextController } from "@/context/evm/evm-signature-verification/EvmSignatureVerificationContextController";
 import { Erc20ContextController } from "@/context/evm/erc20/Erc20ContextController";
 import { headers } from "next/headers";
+import { Erc721ContextController } from "@/context/evm/erc721/Erc721ContextController";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,11 +38,13 @@ export default function RootLayout({
         <EvmWalletSelectorContextController cookies={cookies}>
           <EvmSignatureVerificationContextController>
             <Erc20ContextController>
-              <TodosContextController>
-                <Navbar />
+              <Erc721ContextController>
+                <TodosContextController>
+                  <Navbar />
 
-                {children}
-              </TodosContextController>
+                  {children}
+                </TodosContextController>
+              </Erc721ContextController>
             </Erc20ContextController>
           </EvmSignatureVerificationContextController>
         </EvmWalletSelectorContextController>

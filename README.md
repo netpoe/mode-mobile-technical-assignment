@@ -42,9 +42,9 @@ Expected Use Cases
 ├── Web3 Functionalities
 │   └── Authenticated user must:
 │       ├── ✅ View current ERC20 token balance                             (ERC20 Address below)
-│       ├── Mint an NFT after 2 to do list items are marked completed    (ERC721 Address below)
-│       │   └── The mint button must be initially disabled until completed the tasks.
-│       │   └── The mint transaction must await a specified number of blocks,
+│       ├── ✅ Mint an NFT after 2 to do list items are marked completed    (ERC721 Address below)
+│       │   └── ✅ The mint button must be initially disabled until completed the tasks.
+│       │   └── ✅ The mint transaction must await a specified number of blocks,
 │       │       chosen and justified by the candidate
 │       └── Burn the NFT
 │           └── The burn of the NFT will send an amount of an ERC20 token.
