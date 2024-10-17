@@ -46,7 +46,8 @@ export default function Home() {
     }
   }
 
-  const isMintingEnabled = isConnected && ownershipVerification.isSignatureVerified && todos.filter(todo => todo.completed).length >= 2;
+  const isMintingEnabled =
+    isConnected && ownershipVerification.isSignatureVerified && todos.filter((todo) => todo.completed).length >= 2;
 
   useEffect(() => {
     getTodos({ page: 0, limit: 10 });
@@ -58,11 +59,17 @@ export default function Home() {
         <div className="w-full sm:w-6/12">
           <h1 className="text-2xl sm:text-4xl">Good Day!</h1>
           <p className="text-muted-foreground">Today Is {new Date().toDateString()} — What are you up to now?</p>
-          <div className="flex sm:flex-row flex-col [&>button]:mr-4">
+          <div className="flex flex-col sm:flex-row [&>button]:mr-4">
             <>
-              <Button size="lg" disabled={!isMintingEnabled} onClick={onClickMintNFT}>Mint My NFT!</Button>
+              <Button size="lg" disabled={!isMintingEnabled} onClick={onClickMintNFT}>
+                Mint My NFT!
+              </Button>
 
-              {!isConnected && <Button onClick={handleOnDisplayWidgetClick} size="lg">Connect Your Wallet To Create ToDos</Button>}
+              {!isConnected && (
+                <Button onClick={handleOnDisplayWidgetClick} size="lg">
+                  Connect Your Wallet To Create ToDos
+                </Button>
+              )}
 
               {isConnected && !ownershipVerification.isSignatureVerified && (
                 <Button onClick={handleOnSignMessage} size="lg">
@@ -79,7 +86,16 @@ export default function Home() {
               <>
                 <CustomLabel className="text-right">
                   <CustomLabel.Head className="justify-between">
-                    <Button className="mr-4" size="sm" variant="ghost" onClick={onClickBurnNFT} disabled={!isMintingEnabled}>Burn</Button><h5 className="mb-0">{ERC71Contract?.name} Balance</h5>
+                    <Button
+                      className="mr-4"
+                      size="sm"
+                      variant="ghost"
+                      onClick={onClickBurnNFT}
+                      disabled={!isMintingEnabled}
+                    >
+                      Burn
+                    </Button>
+                    <h5 className="mb-0">{ERC71Contract?.name} Balance</h5>
                   </CustomLabel.Head>
                   <CustomLabel.Description className="justify-end">
                     <h4 className="mb-0">

@@ -9,15 +9,20 @@ import { Erc20ContextController } from "@/context/evm/erc20/Erc20ContextControll
 import { headers } from "next/headers";
 import { Erc721ContextController } from "@/context/evm/erc721/Erc721ContextController";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const PPNeueMachina = localFont({
+  src: [
+    {
+      path: "./fonts/PPNeueMachina-InktrapRegular.woff",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "./fonts/PPNeueMachina-InktrapSemibold.woff",
+      weight: "600",
+      style: "normal",
+    },
+  ],
+  variable: "--font-ppnneuemachina-sans",
 });
 
 export const metadata: Metadata = {
@@ -34,7 +39,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="dark">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${PPNeueMachina.variable} antialiased`}>
         <EvmWalletSelectorContextController cookies={cookies}>
           <EvmSignatureVerificationContextController>
             <Erc20ContextController>

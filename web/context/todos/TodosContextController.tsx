@@ -38,8 +38,6 @@ export const TodosContextController = ({ children }: TodosContextControllerProps
     try {
       const result = await ToDosService.getTodos(body);
 
-      console.log(result);
-
       if (!result?.data) {
         throw new Error("Invalid ToDo Data");
       }

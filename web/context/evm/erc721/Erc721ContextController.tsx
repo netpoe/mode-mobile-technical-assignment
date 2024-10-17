@@ -5,8 +5,9 @@ import React, { useEffect, useState } from "react";
 import { Erc721Context } from "./Erc721Context";
 import { Erc721ContextControllerProps, Erc721ContextType } from "./Erc721Context.types";
 import { useEvmWalletSelectorContext } from "../wallet-selector/useEvmWalletSelectorContext";
-import { useAccount, useClient, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { useAccount, useClient, useWaitForTransactionReceipt, useWatchContractEvent, useWriteContract } from "wagmi";
 import { ERC721Instance } from "@/lib/evm/ERC721/ERC721Instance";
+import { useErc20Context } from "../erc20/useErc20Context";
 import { ZeroXAddress } from "@/lib/evm/evm.types";
 
 export const Erc721ContextController = ({ children, abi, address: contractAddress }: Erc721ContextControllerProps) => {
@@ -15,6 +16,7 @@ export const Erc721ContextController = ({ children, abi, address: contractAddres
   const { wagmiConfig } = useEvmWalletSelectorContext();
 
   const { address } = useAccount();
+
   const publicClient = useClient({ config: wagmiConfig })!;
 
   const { data: hash, isPending, writeContract } = useWriteContract();
@@ -23,7 +25,18 @@ export const Erc721ContextController = ({ children, abi, address: contractAddres
     confirmations: 1,
     hash,
     onReplaced: (replacement) => console.log(replacement),
-  })
+  });
+
+  useWatchContractEvent({
+    address: ERC721Instance.defaultContractAddress as ZeroXAddress,
+    abi: ERC721Instance.defaultABI,
+    eventName: "Transfer",
+    onLogs(logs) {
+      console.log("Transfer Event", logs);
+    },
+  });
+
+  const { contract: ERC20Contract, fetchContractValues: fetchERC20ContractValues } = useErc20Context();
 
   console.log({ hash, isPending, isTxConfirming, isTxConfirmed });
 
@@ -49,11 +62,7 @@ export const Erc721ContextController = ({ children, abi, address: contractAddres
     if (!_contract) return;
 
     try {
-      await Promise.all([
-        _contract.getName(),
-        _contract.getSymbol(),
-        _contract.getBalanceOf(address!),
-      ]);
+      await Promise.all([_contract.getName(), _contract.getSymbol(), _contract.getBalanceOf(address!)]);
 
       console.log(_contract.name, _contract.symbol);
     } catch (error) {
@@ -75,7 +84,7 @@ export const Erc721ContextController = ({ children, abi, address: contractAddres
     if (!contract) return;
 
     try {
-      contract.burn();
+      // contract.burn(totalSupply!);
     } catch (error) {
       console.error(error);
     }
@@ -84,6 +93,12 @@ export const Erc721ContextController = ({ children, abi, address: contractAddres
   useEffect(() => {
     loadContract();
   }, [address]);
+
+  useEffect(() => {
+    if (!isTxConfirmed || !ERC20Contract) return;
+
+    fetchERC20ContractValues(ERC20Contract);
+  }, [isTxConfirmed, ERC20Contract, fetchERC20ContractValues]);
 
   const props: Erc721ContextType = {
     contract,

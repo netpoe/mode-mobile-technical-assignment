@@ -11,7 +11,7 @@ export const CustomLabel: React.FC<CustomLabelProps> & {
 const Head: React.FC<CustomLabelProps> = ({ children, className, ...props }) => (
   <div
     className={clsx(
-      "text-xxs mb-0 flex items-center rounded-tl-sm rounded-tr-sm bg-black px-3 py-1 text-muted-foreground",
+      "text-xxs mb-0 flex min-h-[40px] items-center rounded-tl-sm rounded-tr-sm bg-black px-3 py-1 text-muted-foreground",
       className,
     )}
     {...props}

@@ -1,8 +1,8 @@
 import { Client, getContract, parseEther } from "viem";
 import ABI from "./ERC721-ABI.json";
-import { ZeroXAddress } from "@/context/evm/wallet-selector/EvmWalletSelectorContext.types";
 import { type Config, UseWriteContractReturnType } from "wagmi";
 import { WriteContractMutate } from "wagmi/query";
+import { ZeroXAddress } from "../evm.types";
 
 export const POLYGON_AMOY_DEFAULT_ERC721_ADDRESS = "0x8E1096fd5C8Ca1EFdC1BC2F64Ae439E0888b1A46";
 
@@ -16,7 +16,6 @@ export class ERC721Instance {
 
   name?: string;
   symbol?: string;
-  totalSupply?: string;
   balanceOf?: string = "0";
 
   writeContractFn?: WriteContractMutate<Config, unknown>;
@@ -72,14 +71,6 @@ export class ERC721Instance {
     return this;
   }
 
-  async getTotalSupply() {
-    const _totalSupply = await this.contract.read.totalSupply();
-
-    this.totalSupply = _totalSupply;
-
-    return this;
-  }
-
   async mint() {
     try {
       if (!this.writeContractFn) {
@@ -98,7 +89,7 @@ export class ERC721Instance {
     return this;
   }
 
-  async burn() {
+  async burn(tokenId: number) {
     try {
       if (!this.writeContractFn) {
         throw new Error("writeContractFn is not set");
@@ -108,7 +99,7 @@ export class ERC721Instance {
         abi: ERC721Instance.defaultABI,
         address: ERC721Instance.defaultContractAddress as ZeroXAddress,
         functionName: "burn",
-        args: [],
+        args: [tokenId],
       });
     } catch (error) {
       console.error(error);

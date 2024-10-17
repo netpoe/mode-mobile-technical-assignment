@@ -1,7 +1,7 @@
 import { Client, getContract, parseEther } from "viem";
 
-import { ZeroXAddress } from "@/context/evm/wallet-selector/EvmWalletSelectorContext.types";
 import ABI from "./ERC20-ABI.json";
+import { ZeroXAddress } from "../evm.types";
 
 export const POLYGON_AMOY_DEFAULT_ERC20_ADDRESS = "0xf02f35bF1C8D2c3a1e7255FD9AddC8F2182e0627";
 
