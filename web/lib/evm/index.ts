@@ -1,7 +1,7 @@
 import { parseEther } from "viem";
 import { ERC721Instance } from "./ERC721/ERC721Instance";
 import { truncate } from "./format";
-import { localPublicClient, localWalletClient } from "./localViemClient";
+import { ERC20Instance } from "./ERC20/ERC20Instance";
 
 const getBlockExplorerUrl = () =>
   process.env.NEXT_PUBLIC_DEFAULT_NETWORK_ENV === "testnet"
@@ -9,15 +9,12 @@ const getBlockExplorerUrl = () =>
     : "https://polygonscan.com/";
 
 const e = {
+  ERC20Instance,
   ERC721Instance,
   getBlockExplorerUrl,
   parseEther,
   format: {
     truncate,
-  },
-  localViemClients: {
-    localPublicClient,
-    localWalletClient,
   },
 };
 

@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
-import { createWeb3Modal } from "@web3modal/wagmi/react";
-import { WagmiProvider, cookieStorage, createStorage } from "wagmi";
-import { polygonAmoy } from "wagmi/chains";
+import React from "react";
+import { createAppKit } from "@reown/appkit/react";
+import { polygonAmoy } from "@reown/appkit/networks";
+import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
+import { type Config, cookieToInitialState, WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-import wagmi from "@/lib/wagmi";
 
 import { EvmWalletSelectorContext } from "./EvmWalletSelectorContext";
 import {
@@ -28,31 +26,38 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
-const chains = [polygonAmoy] as const;
-const wagmiConfig = defaultWagmiConfig({
-  chains,
+const networks = [polygonAmoy];
+
+const wagmiAdapter = new WagmiAdapter({
+  networks,
   projectId,
+});
+
+createAppKit({
+  defaultNetwork: polygonAmoy,
+  adapters: [wagmiAdapter],
+  networks: [polygonAmoy],
   metadata,
-  ssr: true,
-  storage: createStorage({
-    storage: cookieStorage,
-  }),
-});
-
-createWeb3Modal({
-  wagmiConfig,
   projectId,
+  features: {
+    analytics: true,
+  },
 });
 
-export const EvmWalletSelectorContextController = ({ children }: EvmWalletSelectorContextControllerProps) => {
-  const [queryClient] = useState(() => new QueryClient());
+const queryClient = new QueryClient();
+
+export const EvmWalletSelectorContextController = ({
+  children,
+  cookies,
+}: EvmWalletSelectorContextControllerProps & { cookies: string | null }) => {
+  const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig as Config, cookies);
 
   const props: EvmWalletSelectorContextType = {
-    wagmiConfig: wagmi.defaultConfig,
+    wagmiConfig: wagmiAdapter.wagmiConfig,
   };
 
   return (
-    <WagmiProvider config={wagmiConfig}>
+    <WagmiProvider config={wagmiAdapter.wagmiConfig} initialState={initialState}>
       <QueryClientProvider client={queryClient}>
         <EvmWalletSelectorContext.Provider value={props}>{children}</EvmWalletSelectorContext.Provider>
       </QueryClientProvider>

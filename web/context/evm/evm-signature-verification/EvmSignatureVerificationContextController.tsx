@@ -9,9 +9,10 @@ import {
   OwnershipVerificationState,
 } from "./EvmSignatureVerificationContext.types";
 import { useAccount, useSignMessage } from "wagmi";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
+
 import { EVMSignatureVerificationService } from "@/lib/api-client/services/EVMSignatureVerificationService";
 import { ZeroXAddress } from "@/lib/evm/evm.types";
+import { useAppKit } from "@reown/appkit/react";
 
 export const EvmSignatureVerificationContextController = ({
   children,
@@ -25,7 +26,8 @@ export const EvmSignatureVerificationContextController = ({
   });
 
   const walletContext = useAccount();
-  const web3Modal = useWeb3Modal();
+
+  const web3Modal = useAppKit();
 
   const { data: signMessageData, error: signMessageError, signMessage } = useSignMessage();
 

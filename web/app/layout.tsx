@@ -6,6 +6,7 @@ import { EvmWalletSelectorContextController } from "@/context/evm/wallet-selecto
 import { TodosContextController } from "@/context/todos/TodosContextController";
 import { EvmSignatureVerificationContextController } from "@/context/evm/evm-signature-verification/EvmSignatureVerificationContextController";
 import { Erc20ContextController } from "@/context/evm/erc20/Erc20ContextController";
+import { headers } from "next/headers";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,10 +29,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookies = headers().get("cookie");
+
   return (
     <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <EvmWalletSelectorContextController>
+        <EvmWalletSelectorContextController cookies={cookies}>
           <EvmSignatureVerificationContextController>
             <Erc20ContextController>
               <TodosContextController>

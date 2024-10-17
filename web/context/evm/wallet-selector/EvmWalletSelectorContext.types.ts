@@ -1,4 +1,4 @@
-import { Config } from "@wagmi/core";
+import { type Config } from "wagmi";
 import { ReactNode } from "react";
 
 export type ZeroXAddress = `0x${string}`;
