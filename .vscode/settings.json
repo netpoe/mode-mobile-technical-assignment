@@ -1,4 +1,6 @@
 {
+	"eslint.format.enable": true,
+	"editor.formatOnSave": true,
 	"editor.codeActionsOnSave": {
 		"source.organizeImports": "never",
 		"source.fixAll.stylelint": "always",
@@ -11,5 +13,5 @@
 			"javascriptreact",
 			"typescript",
 			"typescriptreact"
-	 ],
+	 ]
 }

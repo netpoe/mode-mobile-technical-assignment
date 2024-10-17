@@ -8,6 +8,7 @@ import { EvmSignatureVerificationContextController } from "@/context/evm/evm-sig
 import { Erc20ContextController } from "@/context/evm/erc20/Erc20ContextController";
 import { headers } from "next/headers";
 import { Erc721ContextController } from "@/context/evm/erc721/Erc721ContextController";
+import { Toaster } from "@/components/ui/toaster";
 
 const PPNeueMachina = localFont({
   src: [
@@ -48,6 +49,8 @@ export default function RootLayout({
                   <Navbar />
 
                   {children}
+
+                  <Toaster />
                 </TodosContextController>
               </Erc721ContextController>
             </Erc20ContextController>

@@ -4,7 +4,15 @@ import React from "react";
 import { createAppKit } from "@reown/appkit/react";
 import { polygonAmoy } from "@reown/appkit/networks";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { type Config, cookieToInitialState, WagmiProvider } from "wagmi";
+import {
+  type Config,
+  cookieStorage,
+  cookieToInitialState,
+  createStorage,
+  fallback,
+  unstable_connector,
+  WagmiProvider,
+} from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { EvmWalletSelectorContext } from "./EvmWalletSelectorContext";
@@ -12,6 +20,7 @@ import {
   EvmWalletSelectorContextControllerProps,
   EvmWalletSelectorContextType,
 } from "./EvmWalletSelectorContext.types";
+import { http, injected } from "@wagmi/core";
 
 const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID;
 
@@ -22,15 +31,20 @@ if (!projectId) {
 const metadata = {
   name: "Web3Modal",
   description: "Web3Modal Example",
-  url: "https://web3modal.com",
-  icons: ["https://avatars.githubusercontent.com/u/37784886"],
+  url: "https://reown.com/appkit", // origin must match your domain & subdomain
+  icons: ["https://assets.reown.com/reown-profile-pic.png"],
 };
 
 const networks = [polygonAmoy];
 
+polygonAmoy.rpcUrls;
+
 const wagmiAdapter = new WagmiAdapter({
   networks,
   projectId,
+  storage: createStorage({
+    storage: cookieStorage,
+  }),
 });
 
 createAppKit({

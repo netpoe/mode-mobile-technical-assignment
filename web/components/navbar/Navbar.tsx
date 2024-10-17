@@ -15,7 +15,7 @@ export const Navbar: React.FC<NavbarProps> = ({ className }) => {
       <section className="flex items-center justify-between px-4 py-3 sm:h-auto sm:border-0 sm:px-6">
         <div>
           <Link href={routes.home()} className="no-underline">
-            <h3 className="mb-0">Mode Mobile</h3>
+            <h5 className="mb-0">Mode Mobile</h5>
           </Link>
         </div>
 

@@ -11,7 +11,5 @@ export type Erc721ContextControllerProps = {
 export type Erc721ContextType = {
   contract?: ERC721Instance;
   loadContract: () => void;
-  mint: () => void;
-  burn: () => void;
   fetchContractValues: (_contract: ERC721Instance) => void;
 };

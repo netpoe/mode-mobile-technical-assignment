@@ -21,7 +21,7 @@ export const WalletSelector: React.FC<WalletSelectorProps> = ({ className }) => 
 
   return (
     <div className={clsx(className)}>
-      <Button color="secondary" variant="outline" onClick={handleOnDisplayWidgetClick} size="sm">
+      <Button color="secondary" variant="outline" onClick={handleOnDisplayWidgetClick}>
         {isConnected ? <>{evm.format.truncate(address!)}</> : <>Connect Wallet</>}
       </Button>
     </div>

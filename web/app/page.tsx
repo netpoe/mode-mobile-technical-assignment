@@ -15,6 +15,7 @@ import { UpdateTodoForm } from "@/components/todos/update-todo-form/UpdateTodoFo
 import { useErc20Context } from "@/context/evm/erc20/useErc20Context";
 import { CustomLabel } from "@/components/custom-label/CustomLabel";
 import { useErc721Context } from "@/context/evm/erc721/useErc721Context";
+import { ERC721MintButton } from "@/components/evm/ERC721/mint/Mint";
 
 export default function Home() {
   const { handleOnSignMessage, handleOnDisplayWidgetClick, ownershipVerification } =
@@ -24,20 +25,12 @@ export default function Home() {
 
   const { contract: ERC20Contract } = useErc20Context();
 
-  const { contract: ERC71Contract, mint, burn } = useErc721Context();
+  const { contract: ERC71Contract } = useErc721Context();
 
   const { isConnected } = useAccount();
 
   function onSubmitCreateToDo(data: CreateToDoValidationType) {
     createTodo(data.body);
-  }
-
-  function onClickMintNFT() {
-    mint();
-  }
-
-  function onClickBurnNFT() {
-    burn();
   }
 
   function handleOnCreateTodoDescriptionChange(event: KeyboardEvent<HTMLTextAreaElement>) {
@@ -61,9 +54,7 @@ export default function Home() {
           <p className="text-muted-foreground">Today Is {new Date().toDateString()} — What are you up to now?</p>
           <div className="flex flex-col sm:flex-row [&>button]:mr-4">
             <>
-              <Button size="lg" disabled={!isMintingEnabled} onClick={onClickMintNFT}>
-                Mint My NFT!
-              </Button>
+              <ERC721MintButton />
 
               {!isConnected && (
                 <Button onClick={handleOnDisplayWidgetClick} size="lg">
@@ -86,7 +77,7 @@ export default function Home() {
               <>
                 <CustomLabel className="text-right">
                   <CustomLabel.Head className="justify-between">
-                    <Button
+                    {/* <Button
                       className="mr-4"
                       size="sm"
                       variant="ghost"
@@ -94,7 +85,7 @@ export default function Home() {
                       disabled={!isMintingEnabled}
                     >
                       Burn
-                    </Button>
+                    </Button> */}
                     <h5 className="mb-0">{ERC71Contract?.name} Balance</h5>
                   </CustomLabel.Head>
                   <CustomLabel.Description className="justify-end">
