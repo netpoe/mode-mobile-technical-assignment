@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mode Mobile Web3 ToDo App
 
-## Getting Started
+Having followed the instructions, I present to you my own version of Web3 ToDos.
 
-First, run the development server:
+This repo:
+
+- Is a NextJS 14+ app with App Router
+- The UI libraries include Tailwind CSS and Shadcn
+- State management uses advanced implementation of native `useContext` hooks
+- Wallet connection is handled by AppKit (former WalletConnect)
+
+## Highlights
+
+I made important decisions to avoid repeating myself. The client app uses the ToDos API as a linked local yarn
+dependency to reuse the Typescript types and Zod objects that were already in place.
+
+This app uses the latest version of AppKit (WalletConnect changed its name).
+
+This app uses the "Wagmi React Hooks" way of rendering data from the contracts.
+
+Also, I'm not sure if it was on purpose, but the contract ABIs were incomplete and threw an error when trying to mint or
+burn, so I updated the ABI files too. I created a new hardhart project to compile the TestNFT contract and get the full
+ABI.
+
+The project uses automatic industry standard linting and formatting. VS Code setting files included.
+
+Web3 Authentication is checked on the server side too.
+
+I tried to use the included Bruno API files, but Bruno is very limited on their plugins such as exporting for OpenAPI or
+even creating typings, so I opted out of Bruno.
+
+## Project Setup
+
+Navigate into the `web` directory and run:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then, simply update the `.env.example` file with your own WalletConnect AppKit API token and run:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+make up-dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This command should link the local dependencies.
 
-## Learn More
+Finally, run:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+yarn dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+OR, if you're in VS Code, try running the app with the debugger settings set in `launch.json` by hitting the F5 button
+on your keyboard, or running the debugger manually.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+At this point, you should see the app in `localhost:3002`.

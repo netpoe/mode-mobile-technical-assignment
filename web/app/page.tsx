@@ -78,11 +78,11 @@ export default function Home() {
             {isConnected && (
               <>
                 <CustomLabel className="text-right">
-                  <CustomLabel.Head className="justify-between">
-                    <Erc721BurnButton />
+                  <CustomLabel.Head className="justify-end">
                     <h5 className="mb-0">{ERC71Contract?.name} Balance</h5>
                   </CustomLabel.Head>
-                  <CustomLabel.Description className="justify-end">
+                  <CustomLabel.Description className="flex-row justify-between">
+                    <Erc721BurnButton />
                     <h4 className="mb-0">
                       {ERC71Contract?.symbol} {ERC71Contract?.balanceOf}
                     </h4>
@@ -93,7 +93,7 @@ export default function Home() {
                     <h5 className="mb-0">ERC20 Balance</h5>
                   </CustomLabel.Head>
                   <CustomLabel.Description className="justify-end">
-                    <h4 className="mb-0">
+                    <h4 className="mb-0 max-w-[180px] truncate">
                       <Erc20BalanceOf />
                     </h4>
                   </CustomLabel.Description>

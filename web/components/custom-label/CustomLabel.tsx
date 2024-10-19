@@ -23,7 +23,7 @@ const Head: React.FC<CustomLabelProps> = ({ children, className, ...props }) => 
 const Description: React.FC<CustomLabelProps> = ({ children, className, ...props }) => (
   <div
     className={clsx(
-      "sm:min-h-auto mb-0 flex min-h-[50px] flex-col justify-center rounded-bl-sm rounded-br-sm bg-slate-800 px-3 py-2 text-xs",
+      "sm:min-h-auto mb-0 flex min-h-[50px] rounded-bl-sm rounded-br-sm bg-slate-800 px-3 py-2 text-xs",
       className,
     )}
     {...props}

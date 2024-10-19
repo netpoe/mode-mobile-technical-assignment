@@ -46,9 +46,9 @@ Expected Use Cases
 │       │   └── ✅ The mint button must be initially disabled until completed the tasks.
 │       │   └── ✅ The mint transaction must await a specified number of blocks,
 │       │       chosen and justified by the candidate
-│       └── Burn the NFT
-│           └── The burn of the NFT will send an amount of an ERC20 token.
-│               After successfull burn, the ERC20 balance must be updated in the UI.
+│       └── ✅ Burn the NFT
+│           └── ✅ The burn of the NFT will send an amount of an ERC20 token.
+│               ✅ After successfull burn, the ERC20 balance must be updated in the UI.
 │
 └── User Logout
     ├── ✅ User logs out
@@ -58,13 +58,13 @@ Expected Use Cases
 
 - **Blockchain and Network Choice:**
 
-  - The candidate will have to use the Polygon Amoy testnet, utilizing any public RPCs available.
-  - ERC20 Token Address in the Polygon Amoy Chain `0xf02f35bF1C8D2c3a1e7255FD9AddC8F2182e0627`
-  - ERC721 NFT Address in the Polygon Amoy Chain `0x8E1096fd5C8Ca1EFdC1BC2F64Ae439E0888b1A46`
+  - ✅ The candidate will have to use the Polygon Amoy testnet, utilizing any public RPCs available.
+  - ✅ ERC20 Token Address in the Polygon Amoy Chain `0xf02f35bF1C8D2c3a1e7255FD9AddC8F2182e0627`
+  - ✅ ERC721 NFT Address in the Polygon Amoy Chain `0x8E1096fd5C8Ca1EFdC1BC2F64Ae439E0888b1A46`
 
 - **Web3 Configuration:**
 
-  - Proper Web3 configuration and setup will be highly evaluated. Candidates are encouraged to demonstrate good practices using tools like the WalletConnect SDK and Wagmi.
+  - ✅ Proper Web3 configuration and setup will be highly evaluated. Candidates are encouraged to demonstrate good practices using tools like the WalletConnect SDK and Wagmi.
 
 - **Unit Tests:**
 
@@ -77,7 +77,7 @@ Any extra functionalities added to demonstrate a good understanding of Next.js a
 
 - **UI and Design Flexibility:**
 
-  - There are no strict design requirements or component restrictions. The candidate can choose to use libraries like Material UI or similar. However, good UI decisions will be positively evaluated.
+  - ✅ There are no strict design requirements or component restrictions. The candidate can choose to use libraries like Material UI or similar. However, good UI decisions will be positively evaluated.
 
 - **Rate Limiter Implementation:**
 
@@ -93,7 +93,7 @@ Any extra functionalities added to demonstrate a good understanding of Next.js a
     ```
 
 - **Hooks Usage:**
-  - Good usage of React hooks is highly recommended and will be positively evaluated. Candidates should demonstrate effective and efficient state management and lifecycle handling using hooks.
+  - ✅ Good usage of React hooks is highly recommended and will be positively evaluated. Candidates should demonstrate effective and efficient state management and lifecycle handling using hooks.
 
 ## Implementation Guidelines
 
@@ -109,12 +109,12 @@ Any extra functionalities added to demonstrate a good understanding of Next.js a
 
 3. **State Management:**
 
-   - Demonstrate effective state management throughout the app, ensuring consistency, especially when dealing with blockchain state and user sessions.
+   - ✅ Demonstrate effective state management throughout the app, ensuring consistency, especially when dealing with blockchain state and user sessions.
 
 4. **Performance Optimization:**
 
    - Optimize the application for performance, focusing on load times and minimizing unnecessary server calls.
-   - Implement lazy loading for non-critical components and code splitting where appropriate.
+   - ✅ Implement lazy loading for non-critical components and code splitting where appropriate.
 
 5. **Documentation:**
 
@@ -128,8 +128,8 @@ Any extra functionalities added to demonstrate a good understanding of Next.js a
 
 ## Submission
 
-- Provide a GitHub repository with a clear commit history that reflects the development process.
-- Include any necessary environment setup instructions, such as environment variables and external services used.
+- ✅ Provide a GitHub repository with a clear commit history that reflects the development process.
+- ✅ Include any necessary environment setup instructions, such as environment variables and external services used.
 
 ## Evaluation Criteria
 
