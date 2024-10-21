@@ -7,21 +7,28 @@ import {
   UpdateToDoValidationType,
 } from './validation';
 
-interface ToDo {
+export type ToDo = {
   id: string;
   title: string;
   description: string;
   dueDate: Date;
   priority: 'low' | 'medium' | 'high';
   completed: boolean;
-}
+};
+
+export type GetTodosResponse = {
+  data: ToDo[];
+  page: GetToDosValidationType['query']['page'];
+  limit: GetToDosValidationType['query']['limit'];
+  total: number;
+};
 
 class ToDoControllerHandler {
   private todos: Map<string, ToDo> = new Map();
 
   public getToDos(
     req: Request<unknown, unknown, unknown, GetToDosValidationType['query']>,
-    res: Response,
+    res: Response<GetTodosResponse>,
   ) {
     const { page, limit } = req.query;
     const start = (page - 1) * limit;

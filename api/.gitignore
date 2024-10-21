@@ -128,3 +128,4 @@ backend_bom.xml
 .infra
 .webpack
 .idea
+dist/
