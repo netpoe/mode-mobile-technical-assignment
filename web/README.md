@@ -9,6 +9,9 @@ This repo:
 - State management uses advanced implementation of native `useContext` hooks
 - Wallet connection is handled by AppKit (former WalletConnect)
 
+[Demo ToDos Web3 App Video](https://vimeo.com/1021849672?share=copy#t=0)
+<img width="1201" alt="Screenshot 2024-10-21 at 13 32 26" src="https://github.com/user-attachments/assets/ad35f364-75ca-42a0-a402-c07e5151802c">
+
 ## Highlights
 
 I made important decisions to avoid repeating myself. The client app uses the ToDos API as a linked local yarn
