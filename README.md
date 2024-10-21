@@ -118,13 +118,15 @@ Any extra functionalities added to demonstrate a good understanding of Next.js a
 
 5. **Documentation:**
 
-   - Provide clear documentation on how to set up and run the project.
-   - Include comments within the code explaining key decisions, particularly around web3 integration, security, SSR, and blockchain interactions.
-   - Add a README that explains the architectural choices, particularly around session management, server-side rendering, and blockchain interactions.
+   - ✅ Provide clear documentation on how to set up and run the project.
+   - ✅ Include comments within the code explaining key decisions, particularly around web3 integration, security, SSR, and blockchain interactions.
+   - ✅ Add a README that explains the architectural choices, particularly around session management, server-side rendering, and blockchain interactions.
 
 6. **Testing:**
-   - Write unit and integration tests for the key components, API routes, and blockchain interactions.
-   - Demonstrate an understanding of testing in a Next.js and blockchain-integrated environment.
+   - ✅ Write unit and integration tests for the key components, API routes, and blockchain interactions.
+   - ✅ Write unit API routes
+   - Write unit blockchain interactions.
+   - ✅ Demonstrate an understanding of testing in a Next.js and blockchain-integrated environment.
 
 ## Submission
 
